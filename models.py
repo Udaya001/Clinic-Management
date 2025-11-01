@@ -55,12 +55,11 @@ class User(MongoBaseModel):
 class Patient(MongoBaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     patient_id: Optional[str] = None
-    first_name: str
-    last_name: str
+    full_name: str
     date_of_birth: str
     gender: str
     contact_number: str
-    email: str
+    email: Optional[str] = None
     address: str
     emergency_contact: str
 
@@ -72,12 +71,11 @@ class Patient(MongoBaseModel):
 class Staff(MongoBaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     staff_id: Optional[str] = None
-    first_name: str
-    last_name: str
+    full_name: str
     role: str
     specialization: Optional[str] = None
     contact_number: str
-    email: str
+    email: Optional[str] = None
     hire_date: str
 
     @field_serializer('id')
@@ -91,9 +89,12 @@ class Appointment(MongoBaseModel):
     patient_id: str
     doctor_id: str
     appointment_date: str
+    appointment_time: str
     status: str = "Scheduled"  # Scheduled, Completed, Cancelled, No-Show
     reason_for_visit: str
+    room_number: Optional[str] = None
     notes: Optional[str] = None
+    
 
     @field_serializer('id')
     def serialize_id(self, value: Optional[PyObjectId], _info):
@@ -110,6 +111,7 @@ class MedicalRecord(MongoBaseModel):
     treatment: str
     lab_results: Optional[str] = None
     follow_up_required: bool = False
+    document: Optional[bytes] = None
 
     @field_serializer('id')
     def serialize_id(self, value: Optional[PyObjectId], _info):

@@ -26,18 +26,16 @@ class StandardResponse(BaseModel):
 
 # Patient Schemas
 class PatientCreate(BaseModel):
-    first_name: str
-    last_name: str
+    full_name: str
     date_of_birth: str
     gender: str
     contact_number: str
-    email: str
+    email: Optional[str] = None
     address: str
     emergency_contact: str
 
 class PatientUpdate(BaseModel):
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
+    full_name: Optional[str] = None
     date_of_birth: Optional[str] = None
     gender: Optional[str] = None
     contact_number: Optional[str] = None
@@ -47,17 +45,15 @@ class PatientUpdate(BaseModel):
 
 # Staff Schemas
 class StaffCreate(BaseModel):
-    first_name: str
-    last_name: str
+    full_name: str
     role: str
     specialization: Optional[str] = None
     contact_number: str
-    email: str
+    email: Optional[str] = None
     hire_date: str
 
 class StaffUpdate(BaseModel):
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
+    full_name: Optional[str] = None
     role: Optional[str] = None
     specialization: Optional[str] = None
     contact_number: Optional[str] = None
@@ -69,15 +65,19 @@ class AppointmentCreate(BaseModel):
     patient_id: str
     doctor_id: str
     appointment_date: str
+    appointment_time: str 
     reason_for_visit: str
+    room_number: Optional[str] = None
     notes: Optional[str] = None
 
 class AppointmentUpdate(BaseModel):
     patient_id: Optional[str] = None
     doctor_id: Optional[str] = None
     appointment_date: Optional[str] = None
+    appointment_time: Optional[str] = None
     status: Optional[str] = None  # Scheduled, Completed, Cancelled, No-Show
     reason_for_visit: Optional[str] = None
+    room_number: Optional[str] = None
     notes: Optional[str] = None
 
 # Medical Record Schemas
@@ -89,6 +89,7 @@ class MedicalRecordCreate(BaseModel):
     treatment: str
     lab_results: Optional[str] = None
     follow_up_required: bool = False
+    document: Optional[bytes] = None
 
 class MedicalRecordUpdate(BaseModel):
     patient_id: Optional[str] = None
@@ -98,6 +99,7 @@ class MedicalRecordUpdate(BaseModel):
     treatment: Optional[str] = None
     lab_results: Optional[str] = None
     follow_up_required: Optional[bool] = None
+    document: Optional[bytes] = None
 
 # Billing Schemas
 class BillingCreate(BaseModel):
