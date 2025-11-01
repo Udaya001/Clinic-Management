@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth, patients, staff, appointments, medical_records, billing
+from routers import auth, patients, staff, appointments, medical_records, billing, dashboard
 from database import connect_to_mongo, close_mongo_connection
 
 app = FastAPI(title="Clinic Management System", version="1.0.0")
@@ -17,6 +17,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
 app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])
 app.include_router(staff.router, prefix="/api/staff", tags=["Staff"])
 app.include_router(appointments.router, prefix="/api/appointments", tags=["Appointments"])
